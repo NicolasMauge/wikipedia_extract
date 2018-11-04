@@ -137,7 +137,7 @@ def exclude_articles():
 				else:
 					n_articles_excluded +=1
 
-	print(f"{n_articles_excluded} articles excluded")
+	print(f"{n_articles_excluded} articles excluded (unknown words > 10%)")
 
 
 def vocabulary_transcode():

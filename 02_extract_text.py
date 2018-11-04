@@ -47,4 +47,4 @@ if __name__ == '__main__':
 	start_time = time.time()
 	get_corpus_text()
 	elapsed_time = time.time() - start_time
-	print("Elapsed time: {}".format(hms_string(elapsed_time)))
+	print(f"Elapsed time: {hms_string(elapsed_time)}")

@@ -39,7 +39,6 @@ def get_corpus_text(n_tokens=150000000):
 
 		print(f"{n_words} tokens collected in {n_articles_collected} articles")
 		pbar.close()
-		print(minimum)
 
 if __name__ == '__main__':
 	if not os.path.exists(temp_file_dir):

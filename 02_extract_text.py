@@ -17,6 +17,7 @@ def get_corpus_text(n_tokens=150000000):
 	n_articles_collected = 0
 	print(f"Collecting words:")
 	pbar = tqdm(total=n_tokens, ascii=True, unit=" word")
+
 	with open(temp_file_dir+dest_file, "w") as articles:
 		while n_words < n_tokens: # fastai : 100 000 000 tokens
 			# no need to clean everything for a corpus dedicated to machine learning
@@ -26,10 +27,10 @@ def get_corpus_text(n_tokens=150000000):
 				print("The end of the XML dump has been reached")
 				break
 
-			if random.random()<0.3: # whether to choose this article
+			if random.random()<0.6: # whether to choose this article
 				n_lines, cleaned_text = clean_text(text)
 
-				if n_lines > 50: # since this text will be used for ML
+				if n_lines > 50: # since this text will be used for ML	
 					n_articles_collected = n_articles_collected+1
 					delta_words = len(cleaned_text.split(" "))
 					n_words = n_words + delta_words
@@ -38,9 +39,12 @@ def get_corpus_text(n_tokens=150000000):
 
 		print(f"{n_words} tokens collected in {n_articles_collected} articles")
 		pbar.close()
-
+		print(minimum)
 
 if __name__ == '__main__':
+	if not os.path.exists(temp_file_dir):
+		os.makedirs(temp_file_dir)
+
 	start_time = time.time()
 	get_corpus_text()
 	elapsed_time = time.time() - start_time

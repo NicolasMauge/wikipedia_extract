@@ -2,7 +2,8 @@
 This repository gathers some shells and python scripts to extract and clean wikipedia text for machine learning purposes
 
 ## Prerequisites:
-Anaconda package (tested on >5.1 but probably works on previous versions)
+- Anaconda package (tested on >5.1 but probably works on previous versions)
+- create a data directory
 
 ## 01_wikipedia_download.sh
 This script, based on the facebook repository, downloads the XML dump of wikipedia in a chosen language

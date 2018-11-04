@@ -45,7 +45,7 @@ def tokenize_text():
 			file.write(tokenized)
 
 	elapsed_time = time.time() - start_time
-	print("- Elapsed time: {}".format(hms_string(elapsed_time)))	
+	print(f"- Elapsed time: {hms_string(elapsed_time)}")	
 
 if __name__ == '__main__':
 	tokenize_text()

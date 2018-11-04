@@ -174,8 +174,7 @@ def clean_text(text):
         elif line!="":
             cleaned.append(line)
 
-        last_index = index
-
+    n_lines = len(cleaned)
     cleaned = ' x_return '.join(cleaned) # one line for one article, 'x_return' for \n
 
-    return last_index, cleaned
+    return n_lines, cleaned

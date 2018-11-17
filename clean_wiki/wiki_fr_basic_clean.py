@@ -153,10 +153,10 @@ def suppr_return(text):
     
     return text
 
-def clean_text(text):
+def clean_text(text, keyword_eos):
     cleaned = []
-
     text = suppr_return(text)
+    delimiter_sentences = " "+keyword_eos+"\n"
 
     for index, line in enumerate(process_line(text)):
         # basic cleaning
@@ -175,6 +175,6 @@ def clean_text(text):
             cleaned.append(line)
 
     n_lines = len(cleaned)
-    cleaned = ' x_return '.join(cleaned) # one line for one article, 'x_return' for \n
+    cleaned = delimiter_sentences.join(cleaned) # one line for one article, 'x_return' for \n
 
     return n_lines, cleaned

@@ -13,7 +13,7 @@ from tqdm import tqdm
 max_vocab = 80000 # 60000 seems not enough for french (conjugaisons, accords, etc.)
 
 temp_file_dir = "data/temp/"
-source_file = "temp_03_tokenized_text.csv"
+source_file = "temp_03_tokenized_text.txt"
 temp_file = "temp_04.csv"
 dest_file = "data/wiki_text.csv"
 
@@ -63,7 +63,7 @@ def count_words(vocab_stoi, vocab_itos):
 		with open(filename, "r") as file:
 			data = []
 			for index, line in enumerate(file):
-				line = line.rstrip().lower().split(";")
+				line = line.rstrip().lower().split(" ")
 				data.append(line)
 				
 				if len(data) == 1000:
@@ -103,8 +103,7 @@ def transcode_text():
 		"""
 		with open(filename, "r") as file:
 			for index, line in enumerate(file):
-				line = line.rstrip().split(";")
-			
+				line = line.rstrip().split(" ")
 				yield line
 
 
@@ -112,32 +111,12 @@ def transcode_text():
 	iterator = load_data(filename)
 	with multiprocessing.Pool() as pool:
 		with open(temp_file_dir+temp_file, "w") as file:
-			for article in tqdm(pool.imap_unordered(processing_data_transcode, iterator), total=get_num_lines(filename), ascii=True):
-				file.write(article)
+			for sentence in tqdm(pool.imap_unordered(processing_data_transcode, iterator), total=get_num_lines(filename), ascii=True):
+				if sentence.count("0") / len(sentence) <0.1:
+					file.write(sentence)
 
 	elapsed_time = time.time() - start_time
 	print(f"- Elapsed time: {hms_string(elapsed_time)}")
-
-def exclude_articles():
-	"""
-	Exclude articles with too much "0" (=too many words with little freq)
-	"""
-	file = temp_file_dir+temp_file
-
-	n_articles_excluded = 0
-	with open(dest_file, "w") as dest:
-		with open(file, "r") as data:
-			for article in data:
-				words = article.split(";")
-				n_words = len(words)
-				n_0 = words.count("0")
-				if n_0 / n_words < 0.1: 
-				# the article is kept if the default value freq is less than 10%
-					dest.write(article)
-				else:
-					n_articles_excluded +=1
-
-	print(f"{n_articles_excluded} articles excluded (unknown words > 10%)")
 
 
 def vocabulary_transcode():
@@ -152,7 +131,7 @@ def vocabulary_transcode():
 	stoi = defaultdict(int, stoi)
 
 	transcode_text()
-	exclude_articles()
+
 
 if __name__ == '__main__':
 	vocabulary_transcode()

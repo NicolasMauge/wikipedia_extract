@@ -10,7 +10,9 @@ import random
 temp_file_dir = "data/temp/"
 dest_file = "temp_02_clean_text.txt"
 
-def get_corpus_text(n_tokens=150000000):
+keyword_eos = ""
+
+def get_corpus_text(n_tokens=150000000): #150000000
 	iter_dump = process_xml_dump()
 	
 	n_words = 0
@@ -27,10 +29,10 @@ def get_corpus_text(n_tokens=150000000):
 				print("The end of the XML dump has been reached")
 				break
 
-			n_lines, cleaned_text = clean_text(text)
+			n_lines, cleaned_text = clean_text(text, keyword_eos)
 
-			if n_lines > 100: # since this text will be used for ML	
-				if random.random()<0.8: # whether to choose this article
+			if n_lines > 50: # since this text will be used for ML	
+				if random.random()<0.6: # whether to choose this article
 					n_articles_collected = n_articles_collected+1
 					delta_words = len(cleaned_text.split(" "))
 					n_words = n_words + delta_words

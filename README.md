@@ -11,7 +11,7 @@ This script, based on the facebook repository, downloads the XML dump of wikiped
 ## 02_extract_text.py
 This script extracts the articles in a file using some basic cleanings. 
 - Each article is delimited by '\n'
-- In each articles, each paragraph is delimited by "x_return"
+- In each articles, each paragraph is delimited by "_eos_"
 
 ## 03_tokenization.py
 This script uses SpaCy to tokenize the text.
